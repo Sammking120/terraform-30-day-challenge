@@ -118,7 +118,7 @@ terraform apply
 Terraform returned:
 
 ```bash
-alb_dns_name = your-alb-dns-name
+alb_dns_name = terraform-day-4-alb-2100779818.eu-central-1.elb.amazonaws.com/
 ```
 
 When I opened the DNS in a browser, I saw:
@@ -126,6 +126,7 @@ When I opened the DNS in a browser, I saw:
 ```
 Hello, Welcome to Terraform Day 4 Challenge
 ```
+![Alt text](alb.png)
 
 ✅ This confirms:
 
