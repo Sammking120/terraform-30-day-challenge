@@ -315,16 +315,3 @@ This lab helped me understand how to build **production-ready infrastructure** u
 ### 💡 Outcome:
 
 I successfully deployed a **scalable, fault-tolerant web application architecture**.
-
----
-
-## 📌 Next Steps
-
-* Add HTTPS with ACM
-* Implement scaling policies
-* Use Terraform modules for better structure
-
----
-
-✍️ *Author: Sammy Wells*
-🌍 *Terraform 30-Day Challenge*
