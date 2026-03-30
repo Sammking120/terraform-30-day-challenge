@@ -1,21 +1,5 @@
----
-categories:
-- Terraform
-- DevOps
-- IaC
-date: 2026-03-30
-layout: post
-tags:
-- terraform
-- modules
-- devops
-- infrastructure-as-code
-- aws
-title: Building Reusable Infrastructure with Terraform Modules
----
 
 # Building Reusable Infrastructure with Terraform Modules
-
 As your Terraform configurations grow, one thing becomes obvious very
 quickly:
 
@@ -35,68 +19,63 @@ used together.
 
 ------------------------------------------------------------------------
 
-## Module Directory Structure
+## Terraform Modules
 
-    modules/
-      vpc/
-        main.tf
-        variables.tf
-        outputs.tf
-        README.md
-      ec2/
-        main.tf
-        variables.tf
-        outputs.tf
+A module is a reusable package of Terraform code.
 
-    live/
-      dev/
-        main.tf
-      prod/
-        main.tf
+Think of it as a blueprint: - Dev = small deployment\
+- Production = larger deployment\
+- Same design, different scale
 
 ------------------------------------------------------------------------
 
-## Example Module: EC2
+## Project Structure
 
-### main.tf
+    modules/
+      services/
+        webserver-cluster/
+          main.tf
+          variables.tf
+          outputs.tf
+
+    live/
+      dev/
+      production/
+
+------------------------------------------------------------------------
+
+## Inputs (Variables)
 
 ``` hcl
-resource "aws_instance" "this" {
-  ami           = var.ami
-  instance_type = var.instance_type
-
-  tags = {
-    Name = var.name
-  }
-}
-```
-
-### variables.tf
-
-``` hcl
-variable "ami" {
+variable "cluster_name" {
   type = string
 }
 
 variable "instance_type" {
   type    = string
-  default = "t2.micro"
+  default = "t3.micro"
 }
 
-variable "name" {
-  type = string
+variable "min_size" {
+  type = number
+}
+
+variable "max_size" {
+  type = number
 }
 ```
 
-### outputs.tf
+------------------------------------------------------------------------
+
+## Outputs
 
 ``` hcl
-output "instance_id" {
-  value = aws_instance.this.id
+output "alb_dns_name" {
+  value = aws_lb.alb.dns_name
 }
 
-output "public_ip" {
-  value = aws_instance.this.public_ip
+output "asg_name" {
+  value = aws_autoscaling_group.asg.name
 }
 ```
 
@@ -104,73 +83,53 @@ output "public_ip" {
 
 ## Calling the Module
 
-``` hcl
-module "web_server" {
-  source = "../../modules/ec2"
+### Dev
 
-  ami           = "ami-123456"
-  instance_type = "t2.micro"
-  name          = "dev-web-server"
+``` hcl
+module "webserver_cluster" {
+  source        = "../../../../modules/services/webserver-cluster"
+  cluster_name  = "webservers-dev"
+  instance_type = "t3.micro"
+  min_size      = 1
+  max_size      = 2
+}
+```
+
+### Production
+
+``` hcl
+module "webserver_cluster" {
+  source        = "../../../../modules/services/webserver-cluster"
+  cluster_name  = "webservers-production"
+  instance_type = "t3.micro"
+  min_size      = 2
+  max_size      = 5
 }
 ```
 
 ------------------------------------------------------------------------
 
-## Good vs Bad Modules
+## Key Insight
 
-### Good Module
-
--   Clear inputs\
--   Sensible defaults\
--   Simple design\
--   Reusable
-
-### Bad Module
-
--   Too many variables\
--   Hardcoded logic\
--   Environment-specific logic\
--   Poor naming
+Only inputs change.\
+The module stays the same.
 
 ------------------------------------------------------------------------
 
-## Best Practices
+## What Makes a Good Module
 
-### Naming
-
--   Use clear names (`instance_type`, `vpc_id`)
-
-### Keep Modules Small
-
--   One responsibility per module
-
-### Split When Needed
-
--   Large modules → smaller focused ones
-
-### Avoid Hardcoding
-
--   Always use variables
-
-### Write README
-
-Include: - Description\
-- Inputs\
-- Outputs\
-- Usage example
+-   Clear inputs\
+-   Sensible defaults\
+-   Minimal complexity\
+-   Strong abstraction
 
 ------------------------------------------------------------------------
 
 ## Final Thoughts
 
-Terraform modules help you move from writing infrastructure to designing
-systems.
+Modules turn Terraform from scripts into systems.
 
-Good modules improve: - Reusability\
-- Consistency\
-- Collaboration
-
-Bad modules create technical debt.
+**Write it once. Use it everywhere. Change it in one place.**
 
 ------------------------------------------------------------------------
 
