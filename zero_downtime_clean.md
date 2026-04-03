@@ -1,4 +1,4 @@
-Mastering Zero-Downtime Deployments with Terraform
+## Mastering Zero-Downtime Deployments with Terraform
 
 You've built your infrastructure, your app is running, and your CI/CD
 pipeline is green. Now comes the moment of truth: The Production
