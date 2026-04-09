@@ -73,4 +73,12 @@ This gives you versioned infrastructure. If you update the "Gold Standard" modul
 ---
 
 ### Where Application and Infra Workflows Diverge
-While the steps are similar, the "Mechanical Reality" is different:StepApplication CodeInfrastructure CodeRun LocallyYou see a local UI/API.You see a Plan (a prediction).TestingTests logic/syntax.Tests Resource Compatibility (often costs $).ReleaseYou ship a binary/container.You update a State File.Deployment"Blue/Green" or "Canary."Changes to hardware/network that can't always be "undone" easily.Final ThoughtAdopting this workflow isn't just about using Terraform; it's about building a Platform. By moving secrets to Terraform Cloud and modules to a Private Registry, you turn infrastructure from a bottleneck into a service that your entire team can use safely.
+| Step | Application Code | Infrastructure Code |
+|------|-----------------|---------------------|
+| Run Locally | You see a local UI/API. | You see a Plan (a prediction). |
+| Testing | Tests logic/syntax. | Tests Resource Compatibility (often costs $). |
+| Release | You ship a binary/container. | You update a State File. |
+| Deployment | "Blue/Green" or "Canary." | Changes to hardware/network that can't always be "undone" easily. |
+---
+### Final Thought
+Adopting this workflow isn't just about using Terraform; it's about building a Platform. By moving secrets to Terraform Cloud and modules to a Private Registry, you turn infrastructure from a bottleneck into a service that your entire team can use safely.
