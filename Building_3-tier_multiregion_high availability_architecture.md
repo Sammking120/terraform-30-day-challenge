@@ -2,6 +2,8 @@
 
 In the world of high-stakes infrastructure, "High Availability" in a single region is often just a single point of failure away from a disaster. True resilience requires thinking globally. For Day 27 of my Terraform challenge, I moved beyond Availability Zones to build a **Multi-Region Disaster Recovery (DR)** architecture.
 
+![Alt text](3mltilayerDeployment.png)
+
 ---
 
 ## 1. The Project Structure: Five Modules, One Goal
