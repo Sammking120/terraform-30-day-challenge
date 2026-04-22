@@ -1,8 +1,7 @@
-# Building a 3-Tier Multi-Region High Availability Architecture with Terraform
-
-In the world of high-stakes infrastructure, "High Availability" in a single region is often just a single point of failure away from a disaster. True resilience requires thinking globally. For Day 27 of my Terraform challenge, I moved beyond Availability Zones to build a **Multi-Region Disaster Recovery (DR)** architecture.
-
 ![Alt text](3mltilayerDeployment.png)
+
+# Building a 3-Tier Multi-Region High Availability Architecture with Terraform
+In the world of high-stakes infrastructure, "High Availability" in a single region is often just a single point of failure away from a disaster. True resilience requires thinking globally. For Day 27 of my Terraform challenge, I moved beyond Availability Zones to build a **Multi-Region Disaster Recovery (DR)** architecture.
 
 ---
 
